@@ -136,17 +136,18 @@ public class App {
         promptReturnToReportMenu();
     }
 
+    private static void promptReturnToReportMenu() {
+        System.out.println("\nPress Enter to return to the report menu...");
+        scanner.nextLine();
+    }
+
 
     private static void promptReturnToMenu() {
         System.out.println("\nPress Enter to return to the main menu...");
         scanner.nextLine();
     }
 
-    private static void promptReturnToReportMenu() {
-        System.out.println("\nPress Enter to return to the report menu...");
-        scanner.nextLine();
-    }
-
+    
 
     public static void showReportsMenu() {
         System.out.println("Reports");
