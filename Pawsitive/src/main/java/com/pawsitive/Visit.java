@@ -2,6 +2,7 @@ package com.pawsitive;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Visit {
     LocalDateTime visitedOn;
@@ -46,6 +47,16 @@ public class Visit {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String display() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("E, MMM dd, yyyy hh:mm a");
+        StringBuilder builder = new StringBuilder();
+        builder.append(visitedOn.format(format)).append("\t").append(length).append(" minutes").append("\n")
+                .append(notes).append("\n")
+                .append("__________________________________________________________________________");
+        return builder.toString();
+
     }
 
     @Override

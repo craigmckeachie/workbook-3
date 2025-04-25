@@ -52,7 +52,6 @@ public class App {
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-//                System.out.println(line);
                 String[] tokens = line.split("\\|");
 
                 LocalDateTime visitedOn = LocalDateTime.parse(tokens[0] + "T" + tokens[1]);
@@ -60,11 +59,7 @@ public class App {
                 int length = Integer.parseInt(tokens[3]);
                 double amount = Double.parseDouble(tokens[4]);
                 Visit visit = new Visit(visitedOn,notes,length, amount);
-                System.out.println(visit);
-
-
-
-
+                System.out.println(visit.display());
             }
             bufferedReader.close();
 
@@ -147,7 +142,7 @@ public class App {
         scanner.nextLine();
     }
 
-    
+
 
     public static void showReportsMenu() {
         System.out.println("Reports");
