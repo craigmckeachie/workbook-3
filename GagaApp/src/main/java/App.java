@@ -17,9 +17,7 @@ public class App {
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
-//            throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-
-
     }
 }
