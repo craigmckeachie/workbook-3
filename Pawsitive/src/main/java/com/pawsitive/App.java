@@ -1,5 +1,9 @@
 package com.pawsitive;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class App {
@@ -9,14 +13,13 @@ public class App {
     public static void main(String[] args) {
 
         boolean running = true;
-        while (running){
+        while (running) {
             showMainMenu();
             int selectedMenuOption = scanner.nextInt();
             scanner.nextLine();
 
-            switch (selectedMenuOption){
+            switch (selectedMenuOption) {
                 case 1:
-                    //call a method to render a screen
                     viewVisits();
                     break;
                 case 2:
@@ -27,7 +30,7 @@ public class App {
                     break;
                 case 4:
                     System.out.println("Goodbye");
-                    running =false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Invalid menu option. Try again.");
@@ -35,16 +38,48 @@ public class App {
         }
     }
 
-    public static void viewVisits(){
+    public static void viewVisits() {
         System.out.println("\nVisits");
         System.out.println("---------------------");
         System.out.println();
-        System.out.println();
+
+        try {
+
+            FileReader fileReader = new FileReader("data/visits.csv");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            bufferedReader.readLine();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+//                System.out.println(line);
+                String[] tokens = line.split("\\|");
+
+                LocalDateTime visitedOn = LocalDateTime.parse(tokens[0] + "T" + tokens[1]);
+                String notes = tokens[2];
+                int length = Integer.parseInt(tokens[3]);
+                double amount = Double.parseDouble(tokens[4]);
+                Visit visit = new Visit(visitedOn,notes,length, amount);
+                System.out.println(visit);
+
+
+
+
+            }
+            bufferedReader.close();
+
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        } catch (
+                NumberFormatException e) {
+            System.out.println("Invalid number format in file.");
+        }
+
 
         promptReturnToMenu();
     }
 
-    public static void addVisit(){
+    public static void addVisit() {
         System.out.println("\nAdd Visit");
         System.out.println("---------------------");
         System.out.println();
@@ -53,19 +88,18 @@ public class App {
     }
 
 
-
-    public static void runReports(){
+    public static void runReports() {
         System.out.println("\nRun Reports");
         System.out.println("---------------------");
         System.out.println();
 
         boolean running = true;
-        while (running){
+        while (running) {
             showReportsMenu();
             int selectedMenuOption = scanner.nextInt();
             scanner.nextLine();
 
-            switch (selectedMenuOption){
+            switch (selectedMenuOption) {
                 case 1:
                     //call a method to render a screen
                     runVisitsOverLastWeekReport();
@@ -77,7 +111,7 @@ public class App {
                     //todo
                     break;
                 case 4:
-                    running =false;
+                    running = false;
                     break;
                 default:
                     System.out.println("Invalid report menu option. Try again.");
@@ -86,7 +120,7 @@ public class App {
 
     }
 
-    public static void runVisitsOverLastWeekReport(){
+    public static void runVisitsOverLastWeekReport() {
         System.out.println("\nVisits over Last Week");
         System.out.println("---------------------");
         System.out.println();
@@ -94,7 +128,7 @@ public class App {
         promptReturnToReportMenu();
     }
 
-    public static void runVisitsOver1Hour(){
+    public static void runVisitsOver1Hour() {
         System.out.println("\nVisits over 1 hour");
         System.out.println("---------------------");
         System.out.println();
@@ -114,8 +148,7 @@ public class App {
     }
 
 
-
-    public static void showReportsMenu(){
+    public static void showReportsMenu() {
         System.out.println("Reports");
         System.out.println("---------------------");
         System.out.println("\nWhat report do you wan to run?");
@@ -126,7 +159,7 @@ public class App {
         System.out.print("Enter command: ");
     }
 
-    public static void showMainMenu(){
+    public static void showMainMenu() {
         System.out.println("Pawsitive Pets");
         System.out.println("---------------------");
         System.out.println("\nWhat do you want to do?");
