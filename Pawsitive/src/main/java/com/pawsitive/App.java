@@ -52,18 +52,78 @@ public class App {
         promptReturnToMenu();
     }
 
+
+
     public static void runReports(){
         System.out.println("\nRun Reports");
         System.out.println("---------------------");
         System.out.println();
+
+        boolean running = true;
+        while (running){
+            showReportsMenu();
+            int selectedMenuOption = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (selectedMenuOption){
+                case 1:
+                    //call a method to render a screen
+                    runVisitsOverLastWeekReport();
+                    break;
+                case 2:
+                    runVisitsOver1Hour();
+                    break;
+                case 3:
+                    //todo
+                    break;
+                case 4:
+                    running =false;
+                    break;
+                default:
+                    System.out.println("Invalid report menu option. Try again.");
+            }
+        }
+
+    }
+
+    public static void runVisitsOverLastWeekReport(){
+        System.out.println("\nVisits over Last Week");
+        System.out.println("---------------------");
         System.out.println();
-        promptReturnToMenu();
+        System.out.println();
+        promptReturnToReportMenu();
+    }
+
+    public static void runVisitsOver1Hour(){
+        System.out.println("\nVisits over 1 hour");
+        System.out.println("---------------------");
+        System.out.println();
+        System.out.println();
+        promptReturnToReportMenu();
     }
 
 
     private static void promptReturnToMenu() {
         System.out.println("\nPress Enter to return to the main menu...");
         scanner.nextLine();
+    }
+
+    private static void promptReturnToReportMenu() {
+        System.out.println("\nPress Enter to return to the report menu...");
+        scanner.nextLine();
+    }
+
+
+
+    public static void showReportsMenu(){
+        System.out.println("Reports");
+        System.out.println("---------------------");
+        System.out.println("\nWhat report do you wan to run?");
+        System.out.println(" 1- Visits over Last Week");
+        System.out.println(" 2- Visits over 1 hour");
+        System.out.println(" 3- Visits on a day");
+        System.out.println(" 4- Return to the main menu");
+        System.out.print("Enter command: ");
     }
 
     public static void showMainMenu(){
