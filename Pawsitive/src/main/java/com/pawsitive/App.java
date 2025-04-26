@@ -1,10 +1,9 @@
 package com.pawsitive;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+
 
 public class App {
     private static Scanner scanner = new Scanner(System.in);
@@ -58,7 +57,7 @@ public class App {
                 String notes = tokens[2];
                 int length = Integer.parseInt(tokens[3]);
                 double amount = Double.parseDouble(tokens[4]);
-                Visit visit = new Visit(visitedOn,notes,length, amount);
+                Visit visit = new Visit(visitedOn, notes, length, amount);
                 System.out.println(visit.display());
             }
             bufferedReader.close();
@@ -77,11 +76,25 @@ public class App {
     public static void addVisit() {
         System.out.println("\nAdd Visit");
         System.out.println("---------------------");
-        System.out.println();
-        System.out.println();
+        System.out.println("\nPress Enter to save a new visit...");
+        scanner.nextLine(); //ignore the enter key and continue
+        Visit visit = new Visit(LocalDateTime.now(), "Evening walk for Leo. He was very crazy hyped because he has been heating the Farmers Dog food.", 40, 35);
+        saveVisit(visit);
         promptReturnToMenu();
     }
 
+    public static void saveVisit(Visit visit) {
+        try {
+            FileWriter fileWriter = new FileWriter("data/visits.csv", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write("\n");
+            bufferedWriter.write(visit.toString());
+            bufferedWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred saving the visit. Please try again.");
+            e.getStackTrace();
+        }
+    }
 
     public static void runReports() {
         System.out.println("\nRun Reports");
@@ -136,13 +149,10 @@ public class App {
         scanner.nextLine();
     }
 
-
     private static void promptReturnToMenu() {
         System.out.println("\nPress Enter to return to the main menu...");
         scanner.nextLine();
     }
-
-
 
     public static void showReportsMenu() {
         System.out.println("Reports");
@@ -165,5 +175,6 @@ public class App {
         System.out.println(" 4- Exit Application");
         System.out.print("Enter command: ");
     }
-
 }
+
+

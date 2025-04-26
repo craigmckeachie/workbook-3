@@ -61,12 +61,10 @@ public class Visit {
 
     @Override
     public String toString() {
-        return "Visit{" +
-                "visitedOn=" + visitedOn +
-                ", notes='" + notes + '\'' +
-                ", length=" + length +
-                ", amount=" + amount +
-                '}';
+        DateTimeFormatter dateFormatForFile = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+
+        String visitAsString = String.format("%s|%s|%d|%.2f", visitedOn.format(dateFormatForFile), notes,length, amount);
+        return visitAsString;
     }
 }
 
