@@ -76,9 +76,17 @@ public class App {
     public static void addVisit() {
         System.out.println("\nAdd Visit");
         System.out.println("---------------------");
-        System.out.println("\nPress Enter to save a new visit...");
-        scanner.nextLine(); //ignore the enter key and continue
-        Visit visit = new Visit(LocalDateTime.now(), "Evening walk for Leo. He was very crazy hyped because he has been heating the Farmers Dog food.", 40, 35);
+
+        System.out.println("\nEnter notes: ");
+        String notes = scanner.nextLine();
+
+        System.out.print("\nEnter length of visit in minutes: ");
+        int length = scanner.nextInt();
+
+        System.out.print("\nEnter charges: ");
+        double amount = scanner.nextDouble();
+
+        Visit visit = new Visit(LocalDateTime.now(), notes, length, amount);
         saveVisit(visit);
         promptReturnToMenu();
     }
