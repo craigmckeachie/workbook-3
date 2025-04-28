@@ -2,6 +2,7 @@ package com.pawsitive;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -42,6 +43,21 @@ public class App {
         System.out.println("---------------------");
         System.out.println();
 
+        ArrayList<Visit> visits= readVisitsFromFile();
+        displayVisits(visits);
+
+        promptReturnToMenu();
+    }
+
+    private static void displayVisits(ArrayList<Visit> visits) {
+        for (Visit visit: visits){
+            System.out.println(visit.display());
+        }
+    }
+
+    private static ArrayList<Visit> readVisitsFromFile() {
+        ArrayList<Visit> visits = new ArrayList<>();
+
         try {
 
             FileReader fileReader = new FileReader("data/visits.csv");
@@ -58,7 +74,7 @@ public class App {
                 int length = Integer.parseInt(tokens[3]);
                 double amount = Double.parseDouble(tokens[4]);
                 Visit visit = new Visit(visitedOn, notes, length, amount);
-                System.out.println(visit.display());
+                visits.add(visit);
             }
             bufferedReader.close();
 
@@ -68,9 +84,7 @@ public class App {
                 NumberFormatException e) {
             System.out.println("Invalid number format in file.");
         }
-
-
-        promptReturnToMenu();
+        return visits;
     }
 
     public static void addVisit() {
@@ -139,9 +153,24 @@ public class App {
     public static void runVisitsOverLastWeekReport() {
         System.out.println("\nVisits over Last Week");
         System.out.println("---------------------");
-        System.out.println();
-        System.out.println();
+
+        ArrayList<Visit> visits= readVisitsFromFile();
+        ArrayList<Visit> visitsOverLastWeek = filterToVisitsOverLastWeek(visits);
+        displayVisits(visitsOverLastWeek);
+
         promptReturnToReportMenu();
+    }
+
+    private static ArrayList<Visit> filterToVisitsOverLastWeek(ArrayList<Visit> visits) {
+        LocalDateTime startDate = LocalDateTime.now().minusWeeks(1);
+        LocalDateTime endDate = LocalDateTime.now();
+        ArrayList<Visit> visitsOverLastWeek = new ArrayList<>();
+        for (Visit visit: visits){
+            if (visit.visitedOn.isAfter(startDate) && visit.visitedOn.isBefore(endDate)){
+                visitsOverLastWeek.add(visit);
+            }
+        }
+        return visitsOverLastWeek;
     }
 
     public static void runVisitsOver1Hour() {
